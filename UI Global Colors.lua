@@ -184,4 +184,12 @@ end
 --storing the function in the impy table (namespace).
 impy.workOnNamedUIColors = workOnNamedUIColors
 
-return
+
+
+local function main()
+		
+	impy.workOnNamedUIColors("SET")
+	--impy.workOnNamedUIColors("DELETE")
+
+end
+return main
