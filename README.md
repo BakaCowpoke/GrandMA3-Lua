@@ -5,6 +5,9 @@ It being my slow season, I decided to take up addressing some of where it seems 
 
 I hope Alfred (Shared Table of Functions), Impy (Also a Shared Table of Functions), and I can save you some time and headaches.
 
+Feel free to use these, even as an example of what NOT to do.  
+Just because it works doesn't mean it's pretty.
+
 And I do apologize if my comments in the files seem verbose.
 
 Hope it Helps!
