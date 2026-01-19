@@ -103,7 +103,7 @@ local function main(handleArg1, arg2)
   	end
 
 
-	--[[ elow while loop to test for and handle Null & Empty Sequences & to 
+	--[[ Below while loop to test for and handle Null & Empty Sequences & to 
 		randomly select a different cue than the Current one. ]]
  	local randCueNotFound = true
 
