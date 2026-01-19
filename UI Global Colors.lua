@@ -167,14 +167,6 @@ local function workOnNamedUIColors(strArg1)
 		ErrPrintf("Please check your Argument for Named UI Colors")
 	end
 
-	--[[
-    local base_input = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
-    base_input.h,base_input.w = 100,100
-
-    local button = base_input:Append('Button')
-    button.backcolor = my_color
-
-]]
 
 --[[ Same issue with the Popups. ]]
 CmdIndirect("List Root().ColorTheme.ColorGroups.Global.* /nc")
