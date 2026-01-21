@@ -1,10 +1,10 @@
 --[[
 @title: [ Tags UI Helper.lua ]
 @author: [ BakaCowpoke ]
-@date: [ 1/20/2026 ]
+@date: [ 1/21/2026 ]
 @license: [ CC0 ]
 @description: [ A GrandMA3 Plugin to make Tagging 
-	and Untagging En Masse Much quicker.  ]
+	and Untagging En Masse, Much quicker.  ]
 ]]
 
 
@@ -99,6 +99,8 @@ local function makeOrRemoveTags()
 			--User Input Results
 			tagEntered = riddlesThree['2']['inputs']['User Input']
 			table.insert(tagPicked, tagEntered)
+			tagString = tagEntered
+			CmdIndirectWait('Store Tag \"' .. tagEntered ..'\"')
 
 		end
 	end
