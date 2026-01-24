@@ -113,8 +113,8 @@ local function main(handleArg1, arg2)
 	
 	local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
 		baseLayer.Name = 'Blah'
-    	baseLayer.H = 760
-    	baseLayer.W = 800
+    	baseLayer.H = '70%'  --760
+    	baseLayer.W = '70%'  --800
     	baseLayer.Columns = 1
     	baseLayer.Rows = 3
     	baseLayer[1][1].SizePolicy = 'Fixed'
@@ -184,7 +184,7 @@ local function main(handleArg1, arg2)
 
 			swatchBox[i] = scrollbox:Append('UIObject')
     			swatchBox[i].H = boxSize
-				swatchBox[i].W = 700
+				swatchBox[i].W = '100%'  --700
     			swatchBox[i].Anchors = "0,0,1,0"
 				swatchBox[i].TextColor = "Global.White"
         		swatchBox[i].Font = 'Medium20'
