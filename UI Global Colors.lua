@@ -1,15 +1,16 @@
 --[[
 @title: [ UI Global Colors.lua ]
 @author: [ BakaCowpoke ]
-@date: [ January 10, 2026 ]
+@date: [ 1/25/26 ]
 @description: [ Somewhat Annoying.  
-Can't seem to get rid of the Enter Command Popups.
+Can't seem to get rid of the Enter Command Popup when deleting colors.
 
 Stores or Deletes the list of Custom Colors to
 Root().ColorTheme.ColorGroups.Global
 
-Once stored, When Building UI elementds enables the user to specify a color to assign 
-with a short string (ie. "Global.Red")
+Once stored, When Building UI elementds, it enables the user to specify 
+a color to assign with a short string.
+(ie. "Global.Red")
 
 Based on a Post on the MA forums by Ahuramazda, 
 Link below to original post:
@@ -20,10 +21,10 @@ https://forum.malighting.com/forum/thread/68481-set-color-at-uiobject-in-custom-
 
 
 
---[[ impy Shared Plugin Table (Namespace) Definition
+--[[ alfredPlease Shared Plugin Table (Namespace) Definition
 for sharing functions across Plugin Components without making 
 them Global ]]
-local impy = select(3, ...)
+local alfredPlease = select(3, ...)
 
 
 
@@ -48,7 +49,12 @@ local function workOnNamedUIColors(strArg1)
         {name = "Blue", r = 0, g = 0, b = 255, a = 255},
         {name = "Black", r = 0, g = 0, b = 0, a = 255},
 		{name = "White", r = 255, g = 255, b = 255, a = 255},
-		{name = "DarkGrey", r = 16 , g = 16, b = 18 , a = 255}
+		{name = "DarkGrey", r = 16 , g = 16, b = 18 , a = 255},
+		{name = "DarkGreen", r = 0, g = 127, b = 0, a = 255},
+		{name = "DeepPurple", r = 127, g = 0, b = 127, a = 255},
+		{name = "Magenta", r = 255, g = 0, b = 255, a = 255},
+		{name = "BlueGreen", r = 0, g = 255, b = 255, a = 255},
+		{name = "DarkBlueGreen", r = 0, g = 127, b = 127, a = 255}
     }
 
 	--Exists and making the argument lowercase for simpler comparison
@@ -168,20 +174,89 @@ local function workOnNamedUIColors(strArg1)
 	end
 
 
---[[ Same issue with the Popups. ]]
-CmdIndirect("List Root().ColorTheme.ColorGroups.Global.* /nc")
+--[[ Alfred,  i hate how the List command brings up the "Enter Command" popup.
+	If you would be so kind...
+]]
+alfredPlease.listGlobalColors()
+
+
+--[[ Same issue with the Popups using the below command. ]]
+--CmdIndirect("List Root().ColorTheme.ColorGroups.Global.* /nc")
 
 end
 
---storing the function in the impy table (namespace).
-impy.workOnNamedUIColors = workOnNamedUIColors
+--storing the function in the alfredPlease table (namespace).
+alfredPlease.workOnNamedUIColors = workOnNamedUIColors
+
+
+
+local function listGlobalColors()
+
+	local globalCL = {}
+
+    local globalGroup = Root().ColorTheme.ColorGroups.Global
+    
+    if not globalGroup then
+        Printf("globalGroup not found.")
+        return
+    end
+        
+
+    -- Individual Color
+    for j = 1, globalGroup:Count() do
+		
+        local color = globalGroup[j]
+       
+		local tableToInsert = {color = color.name, rgba = color.rgba, index = color.index}
+		
+		--[[Two colors cause grief since they have 
+			empty strings in the Name field]]
+		if color.name ~= "" then
+			table.insert(globalCL, tableToInsert)
+		end
+		
+	end
+    
+	for k = 1, #globalCL do
+		
+		-- Remove '#' if present
+		local cleanHex = globalCL[k].rgba:gsub("#", "")
+
+		-- Convert pairs to decimal
+		local r = tonumber(cleanHex:sub(1, 2), 16)
+		local g = tonumber(cleanHex:sub(3, 4), 16)
+		local b = tonumber(cleanHex:sub(5, 6), 16)
+		local a = tonumber(cleanHex:sub(7, 8), 16) or 255
+		
+		--Grouping the Decimal values into a single string.
+    	local rgbaDecString = string.format("Dec: (%d, %d, %d, %d)", r, g, b, a)
+	
+		--[[ Made the output 4 lines because I kept 
+		shuffling...this seemed most Legible in the System Monitor]]
+		local outputGCL1 = string.format("#%d ", globalCL[k].index)
+		local outputGCL2 = string.format("Name: %s", globalCL[k].color)
+		local outputGCL3 = string.format("RGBA: %s", globalCL[k].rgba)
+		local outputGCL4 = rgbaDecString
+
+		Printf(outputGCL1)
+		Printf(outputGCL2)
+		Printf(outputGCL3)
+		Printf(outputGCL4)
+		Printf("")
+	end
+
+end
+
+--storing the function in the alfredPlease table (namespace).
+alfredPlease.listGlobalColors = listGlobalColors
 
 
 
 local function main()
 		
-	impy.workOnNamedUIColors("SET")
-	--impy.workOnNamedUIColors("DELETE")
+	alfredPlease.workOnNamedUIColors("SET")
+	--alfredPlease.workOnNamedUIColors("DELETE")
 
 end
+
 return main
