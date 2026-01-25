@@ -1,21 +1,19 @@
 --[[
 @title: [ UI Color List Reference.lua ]
 @author: [ BakaCowpoke ]
-@date: [ 1/23/2026 ]
+@date: [ 1/25/2026 ]
 @license: [ CC0 ]
 @description: [  Plugion Code for reference for UI Color Customization on the GrandMA3.
 
 Without making your own, GrandMA3 has 1500+ references to colors for use when 
 designiing custom UI, they actually only use about 200 unique colors.  
-With the omission of the "Global" colors this plugin shows the colors 
-with the shortest reference names...One per unique Color.
+This plugin shows the colors with the shortest reference names...
+One per unique Color.
+
 A list of the Global color names and info can be found on the MA by entering the 
 below command in the Command Line
 
 List Root().ColorTheme.ColorGroups.Global.*
-
-The Black Gaps in the Table were where a Global value was skipped because the 
-UI didn't like what I was doing with them for whatever reason.
 
 Hope this helps!
 
@@ -36,8 +34,8 @@ local function main(handleArg1, arg2)
 
 	local continue = false
 
-	--[[ full list of 1500+ color references overwhelms 
-	the scrollbox.  Filterd down to thr condensedList of around 200 ]]
+	--[[ full list of 1500+ color references overwhelms the scrollbox.  
+		Filterd down to thr condensedList of around 200 ]]
 	local colorList = {}	
 	local sortedOrder = {}
 
@@ -48,9 +46,8 @@ local function main(handleArg1, arg2)
 	local swatchBox = {}
 
 
-
     local colorGroups = Root().ColorTheme.ColorGroups
-    
+
     if not colorGroups then
         Printf("ColorGroups not found.")
         return
@@ -62,17 +59,25 @@ local function main(handleArg1, arg2)
         
         -- Individual Color
         for j = 1, group:Count() do
-            local color = group[j]
+        	local color = group[j]
        
 			local grpLen = string.len(group.name)
 			local colLen = string.len(color.name)
 			local totLen = grpLen + colLen
 
-			local tableToInsert = { group = group.name, color = color.name, rgba = color.rgba, length = totLen}
-			table.insert(colorList, tableToInsert)
-			table.insert(sortedOrder, tableToInsert)
+
+			--[[Omitting the one entry "Global." can't seem to 
+				catch with Name = Nil tests ]]
+			if totLen ~= 6 then
+
+				local tableToInsert = { group = group.name, color = color.name, rgba = color.rgba, index = color.index, length = totLen}
+				table.insert(colorList, tableToInsert)
+				table.insert(sortedOrder, tableToInsert)
+			end
 		end
+		
     end
+
 
 	 -- Sort by RGBA Then Reference String Lengths
 	table.sort(sortedOrder, function(a, b)
@@ -90,6 +95,7 @@ local function main(handleArg1, arg2)
 
 	local cLColor = nil
 	--Get rid of identical colors keep the one with the shortest reference string
+	
 	for k, v in pairs(sortedOrder) do
 		
 		if cLColor == nil then 
@@ -102,19 +108,12 @@ local function main(handleArg1, arg2)
 		cLColor = v
 	end
 
-	--[[
-	Printf("condensed List#: ".. #condensedList)
-
-	for k, v in pairs(condensedList) do
-		--Printf("RGBA: ".. v.rgba.." Length: "..v.length .. " Color Name: "..v.color .. " Group: ".. v.group)
-	end
-	]]
 
 	
 	local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
 		baseLayer.Name = 'Blah'
-    	baseLayer.H = '70%'  --760
-    	baseLayer.W = '70%'  --800
+    	baseLayer.H = '70%' --760
+    	baseLayer.W = '70%' --800
     	baseLayer.Columns = 1
     	baseLayer.Rows = 3
     	baseLayer[1][1].SizePolicy = 'Fixed'
@@ -169,45 +168,51 @@ local function main(handleArg1, arg2)
 		overwhelmed the scrollBox. ]]
 	
 	--Swatches for each of the Colors
+	Printf("Total Swatches = " .. #condensedList)
 	for i = 1, #condensedList do
     
 		local boxSize = 30
 		
-		--[[ swatchBox seems to have issues with any of the Global Colors 
-			probably has to do with the strings formatting retrieved from the system ]]
+		local currentSwatchText = nil
+		local currentSwatchColor = nil
+
+		--Shortening the Refence string for Global items.
 		if condensedList[i].group == "Global" then
-			
+			currentSwatchText = string.format("Global.%s", condensedList[i].color)
+			currentSwatchColor = string.format("Global.%s", condensedList[i].color)
+
 		else
-			local currentSwatchText = string.format("Root().ColorTheme.ColorGroups.%s.%s", condensedList[i].group, condensedList[i].color)
-			local currentSwatchColor = string.format("%s.%s", condensedList[i].group, condensedList[i].color) 
-		
-
-			swatchBox[i] = scrollbox:Append('UIObject')
-    			swatchBox[i].H = boxSize
-				swatchBox[i].W = '100%'  --700
-    			swatchBox[i].Anchors = "0,0,1,0"
-				swatchBox[i].TextColor = "Global.White"
-        		swatchBox[i].Font = 'Medium20'
-				swatchBox[i].Text = currentSwatchText
-				swatchBox[i].Textshadow = 10
-				swatchBox[i].BackColor = currentSwatchColor
-
-				local yAdj = (i - 1) * boxSize
-
-				swatchBox[i].X, swatchBox[i].Y = 5, yAdj
-
+			currentSwatchText = string.format("Root().ColorTheme.ColorGroups.%s.%s", condensedList[i].group, condensedList[i].color)
+			currentSwatchColor = string.format("%s.%s", condensedList[i].group, condensedList[i].color) 
+			
 		end
+
+		swatchBox[i] = scrollbox:Append('UIObject')
+    		swatchBox[i].H = boxSize
+			swatchBox[i].W = '100%' --700
+    		swatchBox[i].Anchors = "0,0,1,0"
+			swatchBox[i].TextColor = "Global.Text"
+        	swatchBox[i].Font = 'Medium20'
+			swatchBox[i].Text = currentSwatchText
+			swatchBox[i].Textshadow = 10
+			swatchBox[i].BackColor = currentSwatchColor
+
+			local yAdj = (i - 1) * boxSize
+
+			swatchBox[i].X, swatchBox[i].Y = 5, yAdj
 
 	end
 	--End of Swatch Boxes
 
 
-		local buttonGrid = baseLayer:Append('UILayoutGrid')
+	local buttonGrid = baseLayer:Append('UILayoutGrid')
 		buttonGrid.Columns = 2
     	buttonGrid.Rows = 1
     	buttonGrid.H = 80
     	buttonGrid.Anchors = '0,2' 
 
+	--[[ Left the Apply Button for If I want to give feedback 
+		to the System Monitor at a later date. ]]
   	local applyButton = buttonGrid:Append('Button')
     	applyButton.Anchors = '0,0'
     	applyButton.Textshadow = 1
