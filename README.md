@@ -13,3 +13,7 @@ And I do apologize if my comments in the files seem verbose.
 Hope it Helps!
 
 -BakaCowpoke
+
+
+Found a good bit of Reference material in this repository:
+https://github.com/jefffarrow/grandMA3_lua_functions
