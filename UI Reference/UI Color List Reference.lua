@@ -1,14 +1,21 @@
 --[[
 @title: [ UI Color List Reference.lua ]
 @author: [ BakaCowpoke ]
-@date: [ 1/25/2026 ]
+@date: [ 1/27/2026 ]
 @license: [ CC0 ]
 @description: [  Plugion Code for reference for UI Color Customization on the GrandMA3.
 
 Without making your own, GrandMA3 has 1500+ references to colors for use when 
 designiing custom UI, they actually only use about 200 unique colors.  
-This plugin shows the colors with the shortest reference names...
+This plugin shows the colors with the shortest references...
 One per unique Color.
+
+
+IMPORTANT NOTE: Colors that are Global can be assigned with a string 
+(ie."Global.Text")
+Colors that are listed from Root() are Path assignments NOT STRINGS.
+Added the ToAddr reporting because it's SO MUCH SHORTER.
+
 
 A list of the Global color names and info can be found on the MA by entering the 
 below command in the Command Line
@@ -47,6 +54,7 @@ local function main(handleArg1, arg2)
 
 
     local colorGroups = Root().ColorTheme.ColorGroups
+	
 
     if not colorGroups then
         Printf("ColorGroups not found.")
@@ -65,18 +73,24 @@ local function main(handleArg1, arg2)
 			local colLen = string.len(color.name)
 			local totLen = grpLen + colLen
 
+			--Converting to Addresses because it's SO MUCH SHORTER!
+			local currAddress = tostring(ToAddr(color))
+			local currColorRef = tostring(color:Get("ColorDefRef"))
+			
+			
 
 			--[[Omitting the one entry "Global." can't seem to 
 				catch with Name = Nil tests ]]
 			if totLen ~= 6 then
 
-				local tableToInsert = { group = group.name, color = color.name, rgba = color.rgba, index = color.index, length = totLen}
+				local tableToInsert = { group = group.name, color = color.name, rgba = color.rgba, index = color.index, length = totLen, defRef = currColorRef, address = currAddress}
 				table.insert(colorList, tableToInsert)
-				table.insert(sortedOrder, tableToInsert)
+				
 			end
 		end
-		
     end
+
+	sortedOrder = colorList
 
 
 	 -- Sort by RGBA Then Reference String Lengths
@@ -149,6 +163,7 @@ local function main(handleArg1, arg2)
 		for the below ScrollBox Portions of this.  
 		Thanks to "From Dark To Light" for the rest.
 	]]
+
 	local dialog = baseLayer:Append("DialogFrame")
     	dialog.H, dialog.W, dialog.Columns = '98%', '100%', 2
     	dialog[2][2].SizePolicy = "Content"
@@ -167,22 +182,29 @@ local function main(handleArg1, arg2)
 		below swatchBoxes it wouldn't work.  I'm guessing it 
 		overwhelmed the scrollBox. ]]
 	
+
 	--Swatches for each of the Colors
 	Printf("Total Swatches = " .. #condensedList)
 	for i = 1, #condensedList do
     
-		local boxSize = 30
+		local boxSize = 100
 		
 		local currentSwatchText = nil
 		local currentSwatchColor = nil
 
+		--[[Added ToAddr reference because it's WAY Shorter.  
+			Since you have to look up the names anyway. ]]
+		local prunedAddress = string.gsub(condensedList[i].address, "Color ", "")
+
 		--Shortening the Refence string for Global items.
 		if condensedList[i].group == "Global" then
-			currentSwatchText = string.format("Global.%s", condensedList[i].color)
+
+			currentSwatchText = string.format("\"Global.%s\"\nAddress: %s\nTry\nBackColor = %s", condensedList[i].color, condensedList[i].address, prunedAddress)
 			currentSwatchColor = string.format("Global.%s", condensedList[i].color)
 
 		else
-			currentSwatchText = string.format("Root().ColorTheme.ColorGroups.%s.%s", condensedList[i].group, condensedList[i].color)
+
+			currentSwatchText = string.format("Root().ColorTheme.ColorGroups.%s.%s\nAddress: %s\nTry\nBackColor = %s", condensedList[i].group, condensedList[i].color, condensedList[i].address, prunedAddress)
 			currentSwatchColor = string.format("%s.%s", condensedList[i].group, condensedList[i].color) 
 			
 		end
@@ -210,6 +232,7 @@ local function main(handleArg1, arg2)
     	buttonGrid.Rows = 1
     	buttonGrid.H = 80
     	buttonGrid.Anchors = '0,2' 
+
 
 	--[[ Left the Apply Button for If I want to give feedback 
 		to the System Monitor at a later date. ]]
