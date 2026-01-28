@@ -81,7 +81,7 @@ local function main(handleArg1, arg2)
 			local currAddress = tostring(ToAddr(color))
 			local currColorRef = tostring(color:Get("ColorDefRef"))
 			
-			--Converting Hex RGBA to Decimal for better Color Sorting
+			--Converting Hex RGBA to Decimal
 			local cHexRGBA = color.rgba:gsub("#", "")
 
 			local r_Dec = tonumber(string.sub(cHexRGBA, 1, 2), 16)
