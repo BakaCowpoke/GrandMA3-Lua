@@ -68,22 +68,51 @@ local function main(handleArg1, arg2)
         -- Individual Color
         for j = 1, group:Count() do
         	local color = group[j]
-       
-			local grpLen = string.len(group.name)
-			local colLen = string.len(color.name)
-			local totLen = grpLen + colLen
+
+			local rNatAddr = "Root()."..color:AddrNative()
+
+			local totLen = string.len(rNatAddr)
+
+			--local grpLen = string.len(group.name)
+			--local colLen = string.len(color.name)
+			--local totLen = grpLen + colLen
 
 			--Converting to Addresses because it's SO MUCH SHORTER!
 			local currAddress = tostring(ToAddr(color))
 			local currColorRef = tostring(color:Get("ColorDefRef"))
 			
-			
+			--Converting Hex RGBA to Decimal for better Color Sorting
+			local cHexRGBA = color.rgba:gsub("#", "")
+
+			local r_Dec = tonumber(string.sub(cHexRGBA, 1, 2), 16)
+			local g_Dec = tonumber(string.sub(cHexRGBA, 3, 4), 16)
+			local b_Dec = tonumber(string.sub(cHexRGBA, 5, 6), 16)
+			local a_Dec = tonumber(string.sub(cHexRGBA, 7, 8), 16)
+  
+			local rgba_Dec = {r_Dec, g_Dec, b_Dec, a_Dec}
+			local rgba_DecStr = string.format("(%d. %d, %d, %d)",r_Dec, g_Dec, b_Dec, a_Dec)
 
 			--[[Omitting the one entry "Global." can't seem to 
 				catch with Name = Nil tests ]]
 			if totLen ~= 6 then
 
-				local tableToInsert = { group = group.name, color = color.name, rgba = color.rgba, index = color.index, length = totLen, defRef = currColorRef, address = currAddress}
+				local tableToInsert = { 
+					group = group.name, 
+					color = color.name,
+					index = color.index,  
+					rgba = color.rgba,
+					rgbaDec = rgba_Dec,
+					rgbaDecStr = rgba_DecStr,
+					r = r_Dec,
+					g = g_Dec,
+					b = b_Dec,
+					a = a_Dec,
+					natAddress = rNatAddr,
+					address = currAddress, 
+					length = totLen, 
+					defRef = currColorRef 
+				}
+
 				table.insert(colorList, tableToInsert)
 				
 			end
@@ -100,7 +129,7 @@ local function main(handleArg1, arg2)
 			--Secondary Sort (I want the shortest string to call these by.)
 			return a.length < b.length
 		else
-			--Primary Sort (color by RGBA Hex value)
+			--Primary Sort (color by RGBA values)
 			return a.rgba > b.rgba
 		end
 
@@ -187,7 +216,7 @@ local function main(handleArg1, arg2)
 	Printf("Total Swatches = " .. #condensedList)
 	for i = 1, #condensedList do
     
-		local boxSize = 100
+		local boxSize = 120
 		
 		local currentSwatchText = nil
 		local currentSwatchColor = nil
@@ -199,12 +228,12 @@ local function main(handleArg1, arg2)
 		--Shortening the Refence string for Global items.
 		if condensedList[i].group == "Global" then
 
-			currentSwatchText = string.format("\"Global.%s\"\nAddress: %s\nTry\nBackColor = %s", condensedList[i].color, condensedList[i].address, prunedAddress)
+			currentSwatchText = string.format("\"Global.%s\"\nRGBA: %s\nAddress: %s\nTry\nBackColor = %s", condensedList[i].color, condensedList[i].rgbaDecStr, condensedList[i].address, prunedAddress)
 			currentSwatchColor = string.format("Global.%s", condensedList[i].color)
 
 		else
 
-			currentSwatchText = string.format("Root().ColorTheme.ColorGroups.%s.%s\nAddress: %s\nTry\nBackColor = %s", condensedList[i].group, condensedList[i].color, condensedList[i].address, prunedAddress)
+			currentSwatchText = string.format("%s\nRGBA: %s\nAddress: %s\nTry\nBackColor = %s",condensedList[i].natAddress, condensedList[i].rgbaDecStr, condensedList[i].address, prunedAddress)
 			currentSwatchColor = string.format("%s.%s", condensedList[i].group, condensedList[i].color) 
 			
 		end
