@@ -75,7 +75,7 @@ local possibleFont = {
 
 	
 	local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
-		baseLayer.Name = 'Blah'
+		baseLayer.Name = 'Basic'
     	baseLayer.H = 760
     	baseLayer.W = 800
     	baseLayer.Columns = 1
@@ -99,7 +99,7 @@ local possibleFont = {
 
 	local titleBarIcon = titleBar:Append('TitleButton')
 		titleBarIcon.Font = 'Regular24'
-    	titleBarIcon.Text = 'UI Tags Assist'
+    	titleBarIcon.Text = 'UI Font List Reference'
     	titleBarIcon.Texture = 'corner1'
     	titleBarIcon.Anchors = '0,0'
     	titleBarIcon.Icon = 'star'
