@@ -58,7 +58,7 @@ local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
 
 	local titleBarIcon = titleBar:Append('TitleButton')
 		  titleBarIcon.Font = 'Regular24'
-    	titleBarIcon.Text = 'UI Tags Assist'
+    	titleBarIcon.Text = 'UI Compact Layout'
     	titleBarIcon.Texture = 'corner1'
     	titleBarIcon.Anchors = '0,0'
     	titleBarIcon.Icon = 'star'
