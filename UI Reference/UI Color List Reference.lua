@@ -1,7 +1,7 @@
 --[[
 @title: [ UI Color List Reference.lua ]
 @author: [ BakaCowpoke ]
-@date: [ 1/27/2026 ]
+@date: [ 1/28/2026 ]
 @license: [ CC0 ]
 @description: [  Plugion Code for reference for UI Color Customization on the GrandMA3.
 
@@ -34,6 +34,9 @@ local pluginName = select(1, ...)
 local componentName = select(2, ...)
 local signalTable = select(3, ...)
 local myHandle = select(4, ...)
+
+
+local impy = select(3, ...)
 
 
 
@@ -88,9 +91,14 @@ local function main(handleArg1, arg2)
 			local g_Dec = tonumber(string.sub(cHexRGBA, 3, 4), 16)
 			local b_Dec = tonumber(string.sub(cHexRGBA, 5, 6), 16)
 			local a_Dec = tonumber(string.sub(cHexRGBA, 7, 8), 16)
-  
+
+			--Converting Alpha to Match the setting Values in Appearances.
+			local a_Percent = a_Dec/2.55  --divied by 255 * 100
+			local a_MA = impy.round(a_Percent, 1)
+
+			local rgb_DecStr = string.format("(%d. %d, %d)",r_Dec, g_Dec, b_Dec)
 			local rgba_Dec = {r_Dec, g_Dec, b_Dec, a_Dec}
-			local rgba_DecStr = string.format("(%d. %d, %d, %d)",r_Dec, g_Dec, b_Dec, a_Dec)
+
 
 			--[[Omitting the one entry "Global." can't seem to 
 				catch with Name = Nil tests ]]
@@ -102,11 +110,12 @@ local function main(handleArg1, arg2)
 					index = color.index,  
 					rgba = color.rgba,
 					rgbaDec = rgba_Dec,
-					rgbaDecStr = rgba_DecStr,
+					rgbDecStr = rgb_DecStr,
 					r = r_Dec,
 					g = g_Dec,
 					b = b_Dec,
 					a = a_Dec,
+					alphaMA = a_MA,
 					natAddress = rNatAddr,
 					address = currAddress, 
 					length = totLen, 
@@ -154,7 +163,7 @@ local function main(handleArg1, arg2)
 
 	
 	local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
-		baseLayer.Name = 'Blah'
+		baseLayer.Name = 'Basic'
     	baseLayer.H = '70%' --760
     	baseLayer.W = '70%' --800
     	baseLayer.Columns = 1
@@ -178,7 +187,7 @@ local function main(handleArg1, arg2)
 
 	local titleBarIcon = titleBar:Append('TitleButton')
 		titleBarIcon.Font = 'Regular24'
-    	titleBarIcon.Text = 'UI Tags Assist'
+    	titleBarIcon.Text = 'UI Color List Reference'
     	titleBarIcon.Texture = 'corner1'
     	titleBarIcon.Anchors = '0,0'
     	titleBarIcon.Icon = 'star'
@@ -228,12 +237,12 @@ local function main(handleArg1, arg2)
 		--Shortening the Refence string for Global items.
 		if condensedList[i].group == "Global" then
 
-			currentSwatchText = string.format("\"Global.%s\"\nRGBA: %s\nAddress: %s\nTry\nBackColor = %s", condensedList[i].color, condensedList[i].rgbaDecStr, condensedList[i].address, prunedAddress)
+			currentSwatchText = string.format("\"Global.%s\"\n\nRGB: %s   (Alpha: %d / %s%%)    Address: %s\n\nie.  BackColor = %s", condensedList[i].color, condensedList[i].rgbDecStr, condensedList[i].a,  condensedList[i].alphaMA, condensedList[i].address, prunedAddress)
 			currentSwatchColor = string.format("Global.%s", condensedList[i].color)
 
 		else
 
-			currentSwatchText = string.format("%s\nRGBA: %s\nAddress: %s\nTry\nBackColor = %s",condensedList[i].natAddress, condensedList[i].rgbaDecStr, condensedList[i].address, prunedAddress)
+			currentSwatchText = string.format("%s\n\nRGB: %s   (Alpha: %d / %s%%)    Address: %s\n\nie.  BackColor = %s",condensedList[i].natAddress, condensedList[i].rgbDecStr, condensedList[i].a, condensedList[i].alphaMA, condensedList[i].address, prunedAddress)
 			currentSwatchColor = string.format("%s.%s", condensedList[i].group, condensedList[i].color) 
 			
 		end
@@ -304,6 +313,11 @@ local function main(handleArg1, arg2)
 	until continue
 
 
+end
+
+impy.round = function(num, idp)
+    local mult = 10^(idp or 0)
+    return math.floor(num * mult + 0.5) / mult
 end
 
 return main
