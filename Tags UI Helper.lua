@@ -424,7 +424,7 @@ local function tagsUIChecklist(choiceTable, switchArg)
 
 	
 	local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
-		baseLayer.Name = 'Blah'
+		baseLayer.Name = 'Basic'
     	baseLayer.H = 760
     	baseLayer.W = 800
     	baseLayer.Columns = 1
