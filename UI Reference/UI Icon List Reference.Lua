@@ -336,22 +336,24 @@ local function uIIconList(choiceTable, switchArg)
     
 		local iButSize = 100	
 		local iButYAdj = (i - 1) * iButSize
+		local iButtText = string.format("'%s'", iconList[i])
 
 		iButton[i] = scrollbox:Append('Button')
-  			iButton[i].Anchors = '0,0'
+  			iButton[i].Anchors = '0.1,0'
 			iButton[i].H = iButSize
 			iButton[i].W = '100%'
 			iButton[i].Y = iButYAdj
   			iButton[i].Textshadow = 1
   			iButton[i].HasHover = 'Yes'
-  			iButton[i].Text = tostring(iconList[i])
+  			iButton[i].Text = iButtText
   			iButton[i].Font = 'Medium20'
 			iButton[i].TextColor = 'Global.Text'
-			iButton[i].TextalignmentH = 'Left'
+			iButton[i].TextalignmentH = 'Centre'
 			iButton[i].Icon = iconList[i]
-			iButton[i].IconalignmentH = 'Right'
+			iButton[i].IconalignmentH = 'Left'
   			iButton[i].PluginComponent = myHandle
   			iButton[i].Clicked = 'ButtonClicked'
+			
 
 	end
 	--End of Icon Button Display
