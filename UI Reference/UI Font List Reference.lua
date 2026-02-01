@@ -1,27 +1,28 @@
 --[[
 @title: [ UI Font List Reference.lua ]
 @author: [ BakaCowpoke ]
-@date: [ 1/24/2026 ]
+@date: [ 2/1/2026 ]
 @license: [ CC0 ]
 @description: [ UI Code to visualize and compare Fonts 
 	that exist in the GMA UIXML files. 
 
 	To find the fonts on a Mac.
 On a Mac in the Terminal utility I used a Grep search 
-to retrieve the text assignment out of the GMA UIXML files.  
-Copied the results into Textastic (any Text Editor with 
-a mass Find + Replace Funciton will do to clear up the results).
-
-Searched through the results for the 'Font="' string.
+to retrieve the text assignments out of the GMA UIXML files.  
+Used Piping to prune, sort, and make sure there were not duplicates. 
 
 Grep command was similar to:
 
-grep -roE 'Font=.{0,20}' /Users/(Your User Folder)/MALightingTechnology/gma3_2.3.2/shared
 
+grep -roEh "Font=\"([^\"]+)\"" /Users/(Your User Folder)/MALightingTechnology/gma3_2.3.2/shared | sed 's/^.*=//' | sort -u
+
+-roEh = recursive, only Matching, Enable Extended Regular Expressions, no filename
+sed portion was to remove "Font=" 
+sort defaults to Alphbetical. 
+the -u switch on the sort is "Unique", eliminates Duplicates.
 ]
 
 ]]
-
 
 
 --For UI Element Functions
@@ -41,27 +42,23 @@ local alfredPlease = select(3, ...)
 
 local function fontUIChecklist()
 
-local possibleFont = { 
-	'Regular9',
-	--'Regular10',  --In the UIXML files, but causes an error when included
-	'Regular11',
-	--'Regular12',  --In the UIXML files, but causes an error when included
-	'Regular14',
-	'Regular18',
-	'Regular20',
-	'Regular28',
-	'Regular32',
-	'Medium20',
-	'console10',
-	'console12',
-	'console14',
-	'console16',
-	'console18',
-	'console20',
-	'console24',
-	'console28',
-	'console32'
+local possibleFont = {
+	"console16",
+	"console18",
+	"console20",
+	"console24",
+	"Medium20",
+	"Regular9",
+	--"Regular10",  --In the UIXML files, but causes an error when included
+	"Regular11",
+	--"Regular12",  --In the UIXML files, but causes an error when included
+	"Regular14",
+	"Regular18",
+	"Regular20",
+	"Regular28",
+	"Regular32"
 	}
+	
 
 	--Scrolling UI Checkbox List
 
@@ -75,7 +72,7 @@ local possibleFont = {
 
 	
 	local baseLayer = GetFocusDisplay().ScreenOverlay:Append('BaseInput')
-		baseLayer.Name = 'Basic'
+		baseLayer.Name = 'Blah'
     	baseLayer.H = 760
     	baseLayer.W = 800
     	baseLayer.Columns = 1
@@ -99,7 +96,7 @@ local possibleFont = {
 
 	local titleBarIcon = titleBar:Append('TitleButton')
 		titleBarIcon.Font = 'Regular24'
-    	titleBarIcon.Text = 'UI Font List Reference'
+    	titleBarIcon.Text = 'UI Tags Assist'
     	titleBarIcon.Texture = 'corner1'
     	titleBarIcon.Anchors = '0,0'
     	titleBarIcon.Icon = 'star'
@@ -147,7 +144,7 @@ local possibleFont = {
         	cb[i].Text = cbText
 		end
 
-		cb[i].TextColor = "Global.White"
+		cb[i].TextColor = "Global.Text"
 		cb[i].Text = possibleFont[i]
         cb[i].Font = possibleFont[i]
         cb[i].H, cb.W = cbHSize, 200 
