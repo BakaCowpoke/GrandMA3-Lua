@@ -1177,7 +1177,7 @@ function main()
 
 	local titleBarIcon = titleBar:Append('TitleButton')
 		  titleBarIcon.Font = 'Regular24'
-    	titleBarIcon.Text = 'UI Tags Assist'
+    	titleBarIcon.Text = 'UI Icon List Reference'
     	titleBarIcon.Texture = 'corner1'
     	titleBarIcon.Anchors = '0,0'
     	titleBarIcon.Icon = 'star'
