@@ -191,7 +191,7 @@ local function theBADIdea()
 	"CloneGrid",   
 	"CloneOverlay", 
 	"CloningDialog", 
-	--"CloseButton",   
+	--"CloseButton",     --Not Sure why this caused an Error...I've used it before
 	"CmdDlgFunctionButtonsLeft", 
 	"CmdDlgFunctionButtonsRight", 
 	--"CmdInput", 
@@ -1386,7 +1386,8 @@ local function theBADIdea()
 	--"TreeViewRows", 
 	--"UIDmxCurveEditor",   -Crashed
 	"UIDMXPatch", 
-	--"Uifader",    --"UiFader" Works. Not sure why the typo is in the UIXML files.
+	--"Uifader",    --Not sure why the typo is in the UIXML files.
+	"UiFader",  --Works. Added here Manually
 	"UIGrid",   
 	"UILayoutGrid",   
 	"UiMessageCenter", 
