@@ -68,14 +68,15 @@ This next portion will be a bit incomplete, but it's as far as I know at this po
 	You've created a table named signalTable to store Functions in (that the system looks in for Functions when you click a UI Button)
 
 	You've made the applyButton, told it it's a 'Button' and who to stick to (buttonGrid)
+
 	
-	Then you're telling it when you're clicked tell the system to look in the signalTable table for a Function named  'ApplyButtonClicked'
+	Then you've told it, "When you're clicked, tell the system to look in the signalTable table for a Function named  'ApplyButtonClicked' ."
 	
-	the last portiom is the ApplyButtonClicked function code and assigning it as an Function in signaTable so the system can find it.  
+	The last portiom is where you've Defined the ApplyButtonClicked Fumction, its code, and posted it as a Function to be found in signaTable, so the system knows where it can find it..  
 		
 	
 		(caller) is just a local incoming argument variabkle that you can use inside that Function.  
-			Personally I initally thought it had a greater meaning, since the same variable showed up in numerous Button examples.  The truth is it's a  descriptive name and it doesn't matter because of the scope of the function.
+			Personally, I initally thought it had a greater meaning, since the same variable showed up in numerous Button examples.  The truth is it's a  descriptive name and it doesn't matter because of the scope of the function.
 			
 
 			
