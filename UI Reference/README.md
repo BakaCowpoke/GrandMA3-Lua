@@ -45,7 +45,7 @@ Now the question comes, "Well what parameters are there?".
 	You've created a varialbe with the Type/Job/Class/Template.
 	So now you have an instance of a variable of that type to tell the Dump() function to work on and give you information about.
 	
-	Only Dump() one object/variable at a time...it will fill your System Monitor with about 200 lines of informaiton per Dump().
+	One Note: You should Only Dump() one object/variable at a time; it will fill your System Monitor with about 200 lines of informaiton per Dump().
 	
 	
 	
