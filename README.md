@@ -17,3 +17,6 @@ Hope it Helps!
 
 Found a good bit of Reference material in this repository:
 https://github.com/jefffarrow/grandMA3_lua_functions
+
+This repository has a structural map of MA3 that may come in handy.
+https://github.com/4ubiks/grandMA3-filesystem
