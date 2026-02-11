@@ -15,6 +15,10 @@ Hope it Helps!
 -BakaCowpoke
 
 
+With Lua, I started with Dark to Light's tutorials on YouTube.  
+This is her repository on GitHub.
+https://github.com/DeeeLight/FromDarkToLightTutorials
+
 Found a good bit of Reference material in this repository:
 https://github.com/jefffarrow/grandMA3_lua_functions
 
