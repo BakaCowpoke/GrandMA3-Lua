@@ -6,7 +6,7 @@
 
 #### I hope **Alfred**, **Impy** <br>(_a couple Shared Tables of Functions you will find occasionally in my code_), <br>and I can  save you some time and headaches.
 
-#### Feel free to use these, even as an example of what **_NOT_** to do.  Just because it works doesn't mean it's pretty.
+#### Feel free to use these, even as an example of what **_NOT_** to do.  <br> Just because it works doesn't mean it's pretty.
 
 #### And I do apologize if my comments in the files get verbose.
 
