@@ -1,26 +1,26 @@
-I recently took up learning the GrandMA3 software.  
+# Welcome to my repository.
 
-In short order, I was stumbling into features that seem to be absent on the MA.  
-It being my slow season, I decided to take up addressing some of where it seems to be lacking.
+#### I recently took up learning the **_GrandMA3_** software.
 
-I hope Alfred (Shared Table of Functions), Impy (Also a Shared Table of Functions), and I can save you some time and headaches.
+#### In short order, I was stumbling into features that seem to be absent on the MA.  <br>It being my slow season, I decided to take up addressing some of where it seems to be lacking.
 
-Feel free to use these, even as an example of what NOT to do.  
-Just because it works doesn't mean it's pretty.
+#### I hope **Alfred**, **Impy** <br>(_a couple Shared Tables of Functions you will find occasionally in my code_), <br>and I can  save you some time and headaches.
 
-And I do apologize if my comments in the files seem verbose.
+#### Feel free to use these, even as an example of what **_NOT_** to do.  Just because it works doesn't mean it's pretty.
 
-Hope it Helps!
+#### And I do apologize if my comments in the files get verbose.
 
--BakaCowpoke
+### Hope it Helps!
 
+### -**_BakaCowpoke_**
 
-With Lua, I started with Dark to Light's tutorials on YouTube.  
-This is her repository on GitHub.
-https://github.com/DeeeLight/FromDarkToLightTutorials
+<br>
+<br>
 
-Found a good bit of Reference material in this repository:
-https://github.com/jefffarrow/grandMA3_lua_functions
+#### With Lua, I started with [**Dark to Light**](https://github.com/DeeeLight/FromDarkToLightTutorials)'s tutorials on YouTube.  
 
-This repository has a structural map of MA3 that may come in handy.
-https://github.com/4ubiks/grandMA3-filesystem
+<br>
+
+#### There is a good bit of Reference material in [**this repository:**](https://github.com/jefffarrow/grandMA3_lua_functions)
+
+#### If you have a need for a structural map of MA3 you can find one [**here.**](https://github.com/4ubiks/grandMA3-filesystem)
